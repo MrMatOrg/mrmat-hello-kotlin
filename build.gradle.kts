@@ -43,13 +43,10 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-tasks.register("showVersion") {
-    doLast {
-        println("Your version is: ${project.version}")
-    }
-}
-
 tasks.register("generateVersion") {
+    description = "Transfers the build-time version to runtime code"
+    inputs.property("project.version", project.version)
+    outputs.file("${project.buildDir}/generated/kotlinpoet/main/kotlin/${project.group.toString().replace(".", "/")}/Version.kt")
     doLast {
         val versionProperty = com.squareup.kotlinpoet.PropertySpec
             .builder("VERSION", String::class)
@@ -72,4 +69,4 @@ tasks.register("generateVersion") {
     }
 }
 
-tasks.named("build") { dependsOn("generateVersion" )}
+tasks.named("compileKotlin") { dependsOn("generateVersion" )}

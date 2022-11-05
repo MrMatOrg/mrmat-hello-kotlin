@@ -1,0 +1,1 @@
+/Users/imfeldma/projects/mrmat-hello-kotlin/build/classes/kotlin/main/org/mrmat/hello/kotlin/MainKt.class:/Users/imfeldma/projects/mrmat-hello-kotlin/build/classes/kotlin/main/org/mrmat/hello/kotlin/Version$Companion.class:/Users/imfeldma/projects/mrmat-hello-kotlin/build/classes/kotlin/main/org/mrmat/hello/kotlin/Version.class

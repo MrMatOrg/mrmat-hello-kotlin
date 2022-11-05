@@ -1,12 +1,18 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+buildscript {
+    dependencies {
+        classpath("com.squareup:kotlinpoet:1.11.0")
+    }
+}
+
 plugins {
-    kotlin("jvm") version "1.7.10"
+    kotlin("jvm") version "1.7.20"
     application
 }
 
-group = "org.mrmat"
-version = "1.0-SNAPSHOT"
+group = "org.mrmat.hello.kotlin"
+version = System.getenv("MRMAT_VERSION") ?: "0.0.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -14,6 +20,19 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+}
+
+application {
+    mainClass.set("org.mrmat.hello.kotlin.MainKt")
+}
+
+kotlin {
+    sourceSets.main {
+        kotlin.srcDir("${project.buildDir}/generated/kotlinpoet/main/kotlin")
+    }
+    sourceSets.test {
+        kotlin.srcDir("${project.buildDir}/generated/kotlinpoet/test/kotlin")
+    }
 }
 
 tasks.test {
@@ -24,6 +43,33 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-application {
-    mainClass.set("MainKt")
+tasks.register("showVersion") {
+    doLast {
+        println("Your version is: ${project.version}")
+    }
 }
+
+tasks.register("generateVersion") {
+    doLast {
+        val versionProperty = com.squareup.kotlinpoet.PropertySpec
+            .builder("VERSION", String::class)
+            .initializer("%S", project.version)
+            .build()
+        val versionCompanion = com.squareup.kotlinpoet.TypeSpec
+            .companionObjectBuilder()
+            .addProperty(versionProperty)
+            .build()
+        val versionClass = com.squareup.kotlinpoet.TypeSpec
+            .classBuilder("Version")
+            .addType(versionCompanion)
+            .build()
+        val versionClassFile = com.squareup.kotlinpoet.FileSpec.builder(
+            project.group.toString(),
+            "Version")
+            .addType(versionClass)
+            .build()
+        versionClassFile.writeTo(file("${project.buildDir}/generated/kotlinpoet/main/kotlin"))
+    }
+}
+
+tasks.named("build") { dependsOn("generateVersion" )}

@@ -32,9 +32,6 @@ kotlin {
     sourceSets.main {
         kotlin.srcDir("${project.buildDir}/generated/kotlinpoet/main/kotlin")
     }
-    sourceSets.test {
-        kotlin.srcDir("${project.buildDir}/generated/kotlinpoet/test/kotlin")
-    }
 }
 
 tasks.test {

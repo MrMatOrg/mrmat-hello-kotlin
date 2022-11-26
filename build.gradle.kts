@@ -9,6 +9,8 @@ buildscript {
 plugins {
     kotlin("jvm") version "1.7.20"
     application
+
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
 }
 
 group = "org.mrmat.hello.kotlin"
@@ -60,13 +62,12 @@ tasks.register("generateVersion") {
             .classBuilder("Version")
             .addType(versionCompanion)
             .build()
-        val versionClassFile = com.squareup.kotlinpoet.FileSpec.builder(
-            project.group.toString(),
-            "Version")
+        val versionClassFile = com.squareup.kotlinpoet.FileSpec
+            .builder(project.group.toString(), "Version")
             .addType(versionClass)
             .build()
         versionClassFile.writeTo(file("${project.buildDir}/generated/kotlinpoet/main/kotlin"))
     }
 }
 
-tasks.named("compileKotlin") { dependsOn("generateVersion" )}
+tasks.named("compileKotlin") { dependsOn("generateVersion") }

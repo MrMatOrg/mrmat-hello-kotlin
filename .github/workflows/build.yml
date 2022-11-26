@@ -62,8 +62,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: |
-          ~/.local
-          ~/.cache/pip
+          .gradle
         key: ${{ runner.os }}
 
     - name: Conditional Release

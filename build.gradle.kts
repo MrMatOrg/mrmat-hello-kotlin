@@ -9,6 +9,8 @@ buildscript {
 plugins {
     kotlin("jvm") version "1.7.20"
     application
+
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
 }
 
 group = "org.mrmat.hello.kotlin"
@@ -30,9 +32,6 @@ kotlin {
     sourceSets.main {
         kotlin.srcDir("${project.buildDir}/generated/kotlinpoet/main/kotlin")
     }
-    sourceSets.test {
-        kotlin.srcDir("${project.buildDir}/generated/kotlinpoet/test/kotlin")
-    }
 }
 
 tasks.test {
@@ -40,33 +39,37 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_16.majorVersion
 }
 
 tasks.register("generateVersion") {
-    description = "Transfers the build-time version to runtime code"
+    description = "Transfers the build-time version to a generated runtime code file"
+    group = "other"
     inputs.property("project.version", project.version)
     outputs.file("${project.buildDir}/generated/kotlinpoet/main/kotlin/${project.group.toString().replace(".", "/")}/Version.kt")
     doLast {
         val versionProperty = com.squareup.kotlinpoet.PropertySpec
-            .builder("VERSION", String::class)
+            .builder("VERSION", String::class, com.squareup.kotlinpoet.KModifier.CONST)
             .initializer("%S", project.version)
             .build()
-        val versionCompanion = com.squareup.kotlinpoet.TypeSpec
+        val versionCompanionObject = com.squareup.kotlinpoet.TypeSpec
             .companionObjectBuilder()
             .addProperty(versionProperty)
             .build()
         val versionClass = com.squareup.kotlinpoet.TypeSpec
             .classBuilder("Version")
-            .addType(versionCompanion)
+            .addType(versionCompanionObject)
             .build()
-        val versionClassFile = com.squareup.kotlinpoet.FileSpec.builder(
-            project.group.toString(),
-            "Version")
+        val versionClassFile = com.squareup.kotlinpoet.FileSpec
+            .builder(project.group.toString(), "Version")
             .addType(versionClass)
+            .indent("    ")
             .build()
         versionClassFile.writeTo(file("${project.buildDir}/generated/kotlinpoet/main/kotlin"))
     }
 }
 
-tasks.named("compileKotlin") { dependsOn("generateVersion" )}
+tasks.named("compileKotlin") {
+    dependsOn("generateVersion")
+    mustRunAfter("generateVersion")
+}

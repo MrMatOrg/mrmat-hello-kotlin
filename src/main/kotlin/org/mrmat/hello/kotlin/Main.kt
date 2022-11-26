@@ -1,6 +1,5 @@
 package org.mrmat.hello.kotlin
 
-
 fun main(args: Array<String>) {
     println("Hello World!")
     println("Version: ${Version.VERSION}")

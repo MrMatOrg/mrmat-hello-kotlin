@@ -36,9 +36,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout project sources
-      uses: actions/checkout@v2
-
     - name: Calculate Build Context
       run: |
         MRMAT_VERSION="${MAJOR}.${MINOR}.${GITHUB_RUN_NUMBER}"
@@ -52,19 +49,26 @@ jobs:
         fi
         echo "MRMAT_VERSION=${MRMAT_VERSION}" >> $GITHUB_ENV
 
+    - name: Checkout project sources
+      uses: actions/checkout@v3
+
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: temurin
+        java-version: 16
+
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
 
     - name: Build
       run: ./gradlew build
 
-    - name: Establish a cache for dependencies
-      uses: actions/cache@v2
+    - name: Upload build reports
+      uses: actions/upload-artifact@v3
       with:
-        path: |
-          ~/.local
-          ~/.cache/pip
-        key: ${{ runner.os }}
+        name: build-reports
+        path: build/reports
 
     - name: Conditional Release
       uses: marvinpinto/action-automatic-releases@latest

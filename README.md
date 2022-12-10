@@ -1,6 +1,6 @@
 # MrMat :: Hello Kotlin
 
-Kotline Experiments
+Kotlin Experiments
 
 ## Auto-Versioning
 

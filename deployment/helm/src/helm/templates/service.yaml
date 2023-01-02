@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "mrmat-hello-kotlin.fullname" . }}
+  labels:
+    {{- include "mrmat-hello-kotlin.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "mrmat-hello-kotlin.selectorLabels" . | nindent 4 }}

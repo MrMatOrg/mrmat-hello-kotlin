@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 buildscript {
     dependencies {
         classpath("com.squareup:kotlinpoet:1.11.0")
@@ -42,10 +40,6 @@ detekt {
 
 tasks.test {
     useJUnitPlatform()
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_19.majorVersion
 }
 
 tasks.register("generateVersion") {

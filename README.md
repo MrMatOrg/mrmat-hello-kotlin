@@ -3,6 +3,7 @@
 Kotlin Experiments
 
 [![Build](https://github.com/MrMatAP/mrmat-hello-kotlin/actions/workflows/build.yml/badge.svg)](https://github.com/MrMatAP/mrmat-hello-kotlin/actions/workflows/build.yml)
+[![SAST](https://github.com/MrMatAP/mrmat-hello-kotlin/actions/workflows/sast.yml/badge.svg)](https://github.com/MrMatAP/mrmat-hello-kotlin/actions/workflows/sast.yml)
 
 ## How to use this
 

@@ -11,7 +11,6 @@ plugins {
     application
 
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
-    id("io.gitlab.arturbosch.detekt").version("1.22.0")
 }
 
 group = "org.mrmat.hello.kotlin"
@@ -35,17 +34,12 @@ kotlin {
     }
 }
 
-detekt {
-    buildUponDefaultConfig = true // preconfigure defaults
-    allRules = false // activate all available (even unstable) rules.
-}
-
 tasks.test {
     useJUnitPlatform()
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_16.majorVersion
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_19.majorVersion
 }
 
 tasks.register("generateVersion") {

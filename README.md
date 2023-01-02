@@ -38,3 +38,7 @@ product runtime as well through the generated code that the 'generateVersion' Gr
 class whose companion object holds it for runtime consumption. There is a test case to ensure that the version is
 available in this way.
 
+### SAST
+
+SAST is provided by Qodana, in `.github/workflows/sast.yml`. An alternative to this is to use [detekt]
+(https://detect.dev).

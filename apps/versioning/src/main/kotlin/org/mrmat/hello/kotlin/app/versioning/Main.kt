@@ -1,4 +1,4 @@
-package org.mrmat.hello.kotlin
+package org.mrmat.hello.kotlin.app.versioning
 
 fun main(args: Array<String>) {
     println("Hello World!")

@@ -11,6 +11,13 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/apps" />
+            <option value="$PROJECT_DIR$/apps/helloworld-spring" />
+            <option value="$PROJECT_DIR$/apps/versioning" />
+            <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/deployment" />
+            <option value="$PROJECT_DIR$/deployment/ansible" />
+            <option value="$PROJECT_DIR$/deployment/helm" />
           </set>
         </option>
       </GradleProjectSettings>

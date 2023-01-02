@@ -1,6 +1,6 @@
 package org.mrmat.hello.kotlin.test
 
-import org.mrmat.hello.kotlin.Version
+import org.mrmat.hello.kotlin.app.versioning.Version
 import kotlin.test.Test
 
 class VersionTest {

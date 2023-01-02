@@ -13,7 +13,7 @@ dependencies {
 
 kotlin {
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(18))
+        languageVersion.set(JavaLanguageVersion.of(17))
     }
     sourceSets.main {
         kotlin.srcDir("${project.buildDir}/generated/kotlinpoet/main/kotlin")
@@ -34,10 +34,13 @@ tasks.register<org.mrmat.GenerateVersionTask>("generateVersion") {
     group = "mrmat.kotlin"
 }
 
-tasks.named("compileKotlin") {
+tasks.named("runKtlintCheckOverMainSourceSet") {
     dependsOn(tasks.named<org.mrmat.GenerateVersionTask>("generateVersion"))
 }
 
-tasks.named("runKtlintCheckOverMainSourceSet") {
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     dependsOn(tasks.named<org.mrmat.GenerateVersionTask>("generateVersion"))
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+    }
 }

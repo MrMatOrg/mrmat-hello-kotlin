@@ -3,7 +3,6 @@
 Kotlin Experiments
 
 [![Build](https://github.com/MrMatAP/mrmat-hello-kotlin/actions/workflows/build.yml/badge.svg)](https://github.com/MrMatAP/mrmat-hello-kotlin/actions/workflows/build.yml)
-[![SAST](https://github.com/MrMatAP/mrmat-hello-kotlin/actions/workflows/sast.yml/badge.svg)](https://github.com/MrMatAP/mrmat-hello-kotlin/actions/workflows/sast.yml)
 
 ## How to use this
 
@@ -40,5 +39,5 @@ available in this way.
 
 ### SAST
 
-SAST is provided by Qodana, in `.github/workflows/sast.yml`. An alternative to this is to use [detekt]
-(https://detect.dev).
+SAST is provided by [detekt](https://detect.dev) straight in the main `.github/workflows/build.yml` workflow. A 
+desirable alternative to this would be Qodana, but it currently hangs.

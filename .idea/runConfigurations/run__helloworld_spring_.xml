@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="run [helloworld-spring]" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="mrmat-hello-kotlin.apps.helloworld-spring.main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="org.mrmat.hello.kotlin.app.helloworld.spring.App" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

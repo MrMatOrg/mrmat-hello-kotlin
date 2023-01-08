@@ -76,6 +76,9 @@ jobs:
     - name: Build
       run: ./gradlew build
 
+    - name: Even though GitHub can execute docker straight from Gradle, here is how we illustrate running it separately
+      run: ${{ github.workspace }}/apps/helloworld-spring/build/container/build.sh
+
     # Uploads results to GitHub repository using the upload-sarif action
     - uses: github/codeql-action/upload-sarif@v2
       with:

@@ -45,7 +45,7 @@ open class HelmExtension(project: Project) {
             listOf("upgrade", "--install", "--create-namespace", "--namespace", namespace.get(), )
         )
         helmRemoveArgs = project.objects.listProperty(String::class.java).convention(
-            listOf("remove")
+            listOf("uninstall", "--namespace", namespace.get())
         )
         helmLintReport = project.objects.fileProperty().convention(
             project.layout.buildDirectory.file("reports/helm-lint.txt")

@@ -1,61 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "mrmat-hello-kotlin.fullname" . }}
+  name: helloworld-spring
   labels:
-    {{- include "mrmat-hello-kotlin.labels" . | nindent 4 }}
+    app: helloworld-spring
+    version: {{ .Chart.AppVersion }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
-      {{- include "mrmat-hello-kotlin.selectorLabels" . | nindent 6 }}
+      app: helloworld-spring
+      version: {{ .Chart.AppVersion }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "mrmat-hello-kotlin.selectorLabels" . | nindent 8 }}
+        app: helloworld-spring
+        version: {{ .Chart.AppVersion }}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "mrmat-hello-kotlin.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      serviceAccountName: helloworld-spring-sa
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+        - name: helloworld-spring
+          image: "{{ .Values.helloworld.image }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: IfNotPresent
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: 8080
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /
-              port: http
+              port: 8080
           readinessProbe:
             httpGet:
               path: /
-              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+              port: 8080

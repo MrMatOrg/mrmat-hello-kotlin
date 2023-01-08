@@ -1,15 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "mrmat-hello-kotlin.fullname" . }}
+  name: helloworld-spring-svc
   labels:
-    {{- include "mrmat-hello-kotlin.labels" . | nindent 4 }}
+    app: helloworld-spring
+    version: {{ .Chart.AppVersion }}
 spec:
-  type: {{ .Values.service.type }}
+  type: ClusterIP
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - port: 80
+      targetPort: 8080
       protocol: TCP
       name: http
   selector:
-    {{- include "mrmat-hello-kotlin.selectorLabels" . | nindent 4 }}
+      app: helloworld-spring
+      version: {{ .Chart.AppVersion }}

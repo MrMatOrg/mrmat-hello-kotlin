@@ -26,7 +26,7 @@ springBoot {
 }
 
 mrmatContainer {
-    imageName.set("mrmat-hello-world")
+    imageName.set("helloworld-spring")
 }
 
 //

@@ -53,6 +53,7 @@ abstract class HelmBasePlugin: Plugin<Project> {
             executable = helmExtension.helmCommand.get()
             args(*helmExtension.helmLintArgs.get().toTypedArray(), helmExtension.buildPath.get())
 
+            // TODO: If helm lint fails with non-zero exit code then this is never executed
             doLast {
                 if (executionResult.get().exitValue != 0) {
                     logger.error("Helm Lint:\n${standardOutput}\n${errorOutput}")

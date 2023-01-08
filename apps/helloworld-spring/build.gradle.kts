@@ -1,10 +1,11 @@
 plugins {
     kotlin("jvm")
-    id("mrmat.kotlin-conventions")
     id("org.mrmat.plugins.version")
     id("org.springframework.boot") version "3.0.1"
     id("io.spring.dependency-management") version "1.1.0"
     kotlin("plugin.spring") version "1.7.22"
+
+    id("mrmat.kotlin-conventions")
 }
 
 group = "org.mrmat.hello.kotlin.app.helloworld.spring"

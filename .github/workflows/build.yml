@@ -80,7 +80,7 @@ jobs:
     - uses: github/codeql-action/upload-sarif@v2
       with:
         # Path to SARIF file relative to the root of the repository
-        sarif_file: ${{ github.workspace }}/build/reports/detekt/detekt.sarif
+        sarif_file: ${{ github.workspace }}/apps/helloworld-spring/build/reports/detekt/detekt.sarif
         checkout_path: ${{ github.workspace }}
 
     - name: Conditional Release

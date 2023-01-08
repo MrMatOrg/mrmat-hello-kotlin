@@ -3,10 +3,10 @@ plugins {
     id("org.mrmat.plugins.ansible")
 }
 
-mrmatAnsible {
-    ansibleLintCommand.set("/opt/dyn/python/ansible/bin/ansible-lint")
-    ansiblePlaybookCommand.set("/opt/dyn/python/ansible/bin/ansible-playbook")
-}
+//mrmatAnsible {
+//    ansibleLintCommand.set("/opt/dyn/python/ansible/bin/ansible-lint")
+//    ansiblePlaybookCommand.set("/opt/dyn/python/ansible/bin/ansible-playbook")
+//}
 
 val helmChart: Configuration by configurations.creating {
     isCanBeConsumed = true

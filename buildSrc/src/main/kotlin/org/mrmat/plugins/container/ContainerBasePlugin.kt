@@ -44,6 +44,10 @@ abstract class ContainerBasePlugin: Plugin<Project> {
                 "--label", "${containerExtension.imageVersionLabel.get()}=${containerExtension.imageVersion.get()}",
                 "--label", "${containerExtension.imageAppLabel.get()}=${project.rootProject.name}",
                 containerExtension.buildPath.get())
+
+            doFirst {
+                logger.warn("Your Gradle build is orchestrating the container image build")
+            }
         }
 
         project.tasks.register("containerBuildCI") {
@@ -51,6 +55,13 @@ abstract class ContainerBasePlugin: Plugin<Project> {
             description = "Generate a container image build shell script when on CI"
             inputs.files(containerExtension.buildPath.asFileTree)
             outputs.file(containerExtension.ciBuildFile)
+
+            doFirst {
+                logger.warn(
+                    "Your CI is orchestrating the container image build. Execute " +
+                            "${containerExtension.ciBuildFile.get()} in a job where container image building tools " +
+                            "are available")
+            }
 
             doLast {
                 containerExtension.ciBuildFile.get().asFile.writeText("""

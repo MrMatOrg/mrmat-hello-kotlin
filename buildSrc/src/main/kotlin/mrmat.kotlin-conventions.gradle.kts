@@ -1,11 +1,9 @@
-import org.mrmat.plugins.version.GenerateKotlinVersionTask
-
 plugins {
     kotlin("jvm")
     id("org.jlleitschuh.gradle.ktlint")
     id("io.gitlab.arturbosch.detekt")
-    // TODO: We have a circular dependency within buildSrc setting this. Conventions should be separated from plugins
-    // id("org.mrmat.plugins.version")
+    // You would technically add our other plugins here but since they come out of buildSrc as well that would
+    // cause a circular dependency
 }
 
 repositories {
@@ -35,17 +33,12 @@ tasks.test {
     useJUnitPlatform()
 }
 
-tasks.register<GenerateKotlinVersionTask>("generateVersion") {
-    description = "Transfers the build-time version to a generated runtime code file"
-    group = "mrmat.kotlin"
-}
-
 tasks.named("runKtlintCheckOverMainSourceSet") {
-    dependsOn(tasks.named<GenerateKotlinVersionTask>("generateVersion"))
+    dependsOn(tasks.named("generateKotlinVersion"))
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    dependsOn(tasks.named<GenerateKotlinVersionTask>("generateVersion"))
+    dependsOn(tasks.named("generateKotlinVersion"))
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
     }

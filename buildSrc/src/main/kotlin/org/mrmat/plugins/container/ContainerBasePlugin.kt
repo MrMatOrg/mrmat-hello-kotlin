@@ -32,16 +32,39 @@ abstract class ContainerBasePlugin: Plugin<Project> {
             into(containerExtension.buildPath)
         }
 
-        project.tasks.register<Exec>("containerBuild") {
+        project.tasks.register<Exec>("containerBuildLocal") {
             group = GROUP
-            description = "Build the container image"
+            description = "Build the container image when container build utilities are present"
             inputs.files(containerExtension.buildPath.asFileTree)
             workingDir = containerExtension.buildPath.get().asFile
             executable = containerExtension.builderCommand.get()
             args(
                 *containerExtension.builderCommandArgs.get().toTypedArray(),
                 "--tag", "${containerExtension.imageName.get()}:${containerExtension.imageVersion.get()}",
+                "--label", "${containerExtension.imageVersionLabel.get()}=${containerExtension.imageVersion.get()}",
+                "--label", "${containerExtension.imageAppLabel.get()}=${project.rootProject.name}",
                 containerExtension.buildPath.get())
+        }
+
+        project.tasks.register("containerBuildCI") {
+            group = GROUP
+            description = "Generate a container image build shell script when on CI"
+            inputs.files(containerExtension.buildPath.asFileTree)
+            outputs.file(containerExtension.ciBuildFile)
+
+            doLast {
+                containerExtension.ciBuildFile.get().asFile.writeText("""
+                |#!/bin/bash
+                |${containerExtension.builderCommand.get()} \
+                |   ${containerExtension.builderCommandArgs.get().joinToString(" ")} \
+                |   -f ${containerExtension.dockerFile.get()} \
+                |   --tag ${containerExtension.imageName.get()}:${containerExtension.imageVersion.get()} \
+                |   --label ${containerExtension.imageVersionLabel.get()}=${containerExtension.imageVersion.get()} \
+                |   --label ${containerExtension.imageAppLabel.get()}=${project.rootProject.name} \
+                |   ${containerExtension.buildPath.get()}
+                """.trimMargin())
+                containerExtension.ciBuildFile.get().asFile.setExecutable(true)
+            }
         }
     }
 }

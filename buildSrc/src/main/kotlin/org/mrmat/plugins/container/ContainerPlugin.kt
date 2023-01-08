@@ -12,7 +12,7 @@ abstract class ContainerPlugin: Plugin<Project> {
     override fun apply(project: Project) {
         project.plugins.apply(ContainerBasePlugin::class.java)
 
-        //val containerExtension = project.extensions.getByType<ContainerExtension>(ContainerExtension::class.java)
+        val containerExtension = project.extensions.getByType<ContainerExtension>(ContainerExtension::class.java)
 
         //
         // Opinionated task configuration and weaving
@@ -20,7 +20,10 @@ abstract class ContainerPlugin: Plugin<Project> {
         project.tasks.named("build") {
             dependsOn(
                 project.tasks.named<Copy>("containerAssemble"),
-                project.tasks.named<Exec>("containerBuild"))
+                if(containerExtension.ci.get())
+                    project.tasks.named<Exec>("containerBuildLocal")
+                else
+                    project.tasks.named("containerBuildCI"))
         }
     }
 }

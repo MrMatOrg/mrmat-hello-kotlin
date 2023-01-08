@@ -1,21 +1,18 @@
-package org.mrmat
+package org.mrmat.plugins.version
 
 import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.DirectoryProperty
-import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputDirectory
-import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
-import org.gradle.work.Incremental
-import org.gradle.work.InputChanges
 
 
-abstract class GenerateVersionTask : DefaultTask() {
+abstract class GenerateKotlinVersionTask: DefaultTask() {
 
     @get:Input
     abstract val version: Property<String>
@@ -31,7 +28,7 @@ abstract class GenerateVersionTask : DefaultTask() {
     @TaskAction
     fun execute() {
         val versionProperty = PropertySpec
-            .builder("VERSION", String::class, com.squareup.kotlinpoet.KModifier.CONST)
+            .builder("VERSION", String::class, KModifier.CONST)
             .initializer("%S", version.get())
             .build()
         val versionCompanionObject = TypeSpec

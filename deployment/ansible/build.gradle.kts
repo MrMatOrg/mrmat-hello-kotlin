@@ -1,17 +1,23 @@
 plugins {
-    id("mrmat.ansible-conventions")
+    id("org.mrmat.plugins.version")
+    id("org.mrmat.plugins.ansible")
 }
 
-description = "The Helm chart deploying the mrmat-hello-kotlin containers"
+mrmatAnsible {
+    ansibleLintCommand.set("/opt/dyn/python/ansible/bin/ansible-lint")
+    ansiblePlaybookCommand.set("/opt/dyn/python/ansible/bin/ansible-playbook")
+}
+
+val helmChart: Configuration by configurations.creating {
+    isCanBeConsumed = true
+    isCanBeResolved = true
+}
 
 dependencies {
-    project(":deployment:helm")
+    helmChart(project(path = ":deployment:helm", configuration = "helmChart"))
 }
 
-configurations {
-    create("containers") {
-        attributes {
-            attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named("helm-chart"))
-        }
-    }
+tasks.create<Copy>("copyHelmChart") {
+    from(configurations.named("helmChart"))
+    into(layout.buildDirectory.dir("helm"))
 }

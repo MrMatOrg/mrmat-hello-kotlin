@@ -1,0 +1,3 @@
+# Ansible variables that apply across all environments
+---
+app_version: 0.0.0-SNAPSHOT

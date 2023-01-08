@@ -1,5 +1,6 @@
 plugins {
     application
+    id("org.mrmat.plugins.version")
     id("mrmat.kotlin-conventions")
 }
 

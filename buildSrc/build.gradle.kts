@@ -40,6 +40,14 @@ gradlePlugin {
             id = "org.mrmat.plugins.version"
             implementationClass = "org.mrmat.plugins.version.VersionPlugin"
         }
+        create("containerBasePlugin") {
+            id = "org.mrmat.plugins.container.base"
+            implementationClass = "org.mrmat.plugins.container.ContainerBasePlugin"
+        }
+        create("containerPlugin") {
+            id = "org.mrmat.plugins.container"
+            implementationClass = "org.mrmat.plugins.container.ContainerPlugin"
+        }
         create("helmBasePlugin") {
             id = "org.mrmat.plugins.helm.base"
             implementationClass = "org.mrmat.plugins.helm.HelmBasePlugin"

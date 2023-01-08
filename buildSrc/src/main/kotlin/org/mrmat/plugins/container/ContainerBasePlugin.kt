@@ -56,14 +56,11 @@ abstract class ContainerBasePlugin: Plugin<Project> {
             inputs.files(containerExtension.buildPath.asFileTree)
             outputs.file(containerExtension.ciBuildFile)
 
-            doFirst {
+            doLast {
                 logger.warn(
                     "Your CI is orchestrating the container image build. Execute " +
                             "${containerExtension.ciBuildFile.get()} in a job where container image building tools " +
                             "are available")
-            }
-
-            doLast {
                 containerExtension.ciBuildFile.get().asFile.writeText("""
                 |#!/bin/bash
                 |${containerExtension.builderCommand.get()} \

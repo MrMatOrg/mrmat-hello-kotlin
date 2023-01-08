@@ -21,9 +21,9 @@ abstract class ContainerPlugin: Plugin<Project> {
             dependsOn(
                 project.tasks.named<Copy>("containerAssemble"),
                 if(containerExtension.ci.get())
-                    project.tasks.named<Exec>("containerBuildLocal")
+                    project.tasks.named<Exec>("containerBuildCI")
                 else
-                    project.tasks.named("containerBuildCI"))
+                    project.tasks.named("containerBuildLocal"))
         }
     }
 }

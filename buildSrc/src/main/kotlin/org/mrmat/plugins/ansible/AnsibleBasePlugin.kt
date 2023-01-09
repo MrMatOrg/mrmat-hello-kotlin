@@ -5,6 +5,7 @@ import org.gradle.api.Project
 import org.gradle.api.logging.LogLevel
 import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.Exec
+import org.gradle.api.tasks.StopExecutionException
 import org.gradle.kotlin.dsl.register
 import java.io.ByteArrayOutputStream
 
@@ -57,19 +58,21 @@ abstract class AnsibleBasePlugin: Plugin<Project> {
             errorOutput = ByteArrayOutputStream()
             executable = ansibleExtension.ansibleLintCommand.get()
             args(*ansibleExtension.ansibleLintArgs.get().toTypedArray(), ansibleExtension.buildPath.get())
+            setIgnoreExitValue(true)
 
             doLast {
-                if (executionResult.get().exitValue != 0) {
-                    logger.error("Ansible Lint:\n${standardOutput}\n${errorOutput}")
-                } else {
-                    logger.info("Ansible Lint:\n${standardOutput}\n${errorOutput}")
-                }
                 project.mkdir(ansibleExtension.ansibleLintReport.get().asFile.parent)
                 ansibleExtension.ansibleLintReport.get().asFile.writeText("""
                     |Ansible Lint:
                     |${standardOutput}
                     |${errorOutput}
                     """.trimMargin())
+                if (executionResult.get().exitValue != 0) {
+                    logger.error("Ansible Lint:\n${standardOutput}\n${errorOutput}")
+                    throw StopExecutionException("Ansible Playbook does not lint")
+                } else {
+                    logger.info("Ansible Lint:\n${standardOutput}\n${errorOutput}")
+                }
             }
         }
 

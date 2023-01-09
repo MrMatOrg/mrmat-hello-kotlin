@@ -6,7 +6,7 @@ metadata:
     app: helloworld-spring
     version: {{ .Chart.AppVersion }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.helloworldSpring.replicaCount }}
   selector:
     matchLabels:
       app: helloworld-spring
@@ -20,7 +20,7 @@ spec:
       serviceAccountName: helloworld-spring-sa
       containers:
         - name: helloworld-spring
-          image: "{{ .Values.helloworld.image }}:{{ .Chart.AppVersion }}"
+          image: "{{ .Values.helloworldSpring.image }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

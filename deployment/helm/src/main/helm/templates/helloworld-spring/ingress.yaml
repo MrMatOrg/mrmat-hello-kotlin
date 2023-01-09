@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: {{ .Values.helloworld.ingress }}
+    - host: {{ .Values.helloworldSpring.ingress }}
       http:
         paths:
         - path: /

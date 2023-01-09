@@ -5,14 +5,16 @@ metadata:
   labels:
     app: helloworld-spring
     version: {{ .Chart.AppVersion }}
+  annotations:
+    nginx.org/rewrites: "serviceName=helloworld-spring-svc rewrite=/"
 spec:
   ingressClassName: nginx
   rules:
-    - host: {{ .Values.helloworldSpring.ingress }}
+    - host: {{ .Values.ingress.host }}
       http:
         paths:
-        - path: /
-          pathType: ImplementationSpecific
+        - path: {{ .Values.helloworldSpring.path }}
+          pathType: Prefix
           backend:
             service:
               name: helloworld-spring-svc

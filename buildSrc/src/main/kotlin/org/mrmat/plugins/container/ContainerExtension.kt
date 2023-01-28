@@ -19,6 +19,7 @@ open class ContainerExtension(project: Project) {
 
     val builderCommand: Property<String>
     val builderCommandArgs: ListProperty<String>
+    val runCommandArgs: ListProperty<String>
 
     val ci: Property<Boolean>
     val ciBuildFile: RegularFileProperty
@@ -43,6 +44,9 @@ open class ContainerExtension(project: Project) {
         builderCommand = project.objects.property(String::class.java).convention("docker")
         builderCommandArgs = project.objects.listProperty(String::class.java).convention(
             listOf("build")
+        )
+        runCommandArgs = project.objects.listProperty(String::class.java).convention(
+            listOf("run", "-iP", "--rm")
         )
 
         ci = project.objects.property(Boolean::class.java).convention(System.getenv("CI") != null)

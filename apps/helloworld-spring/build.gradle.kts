@@ -27,6 +27,7 @@ springBoot {
 
 mrmatContainer {
     imageName.set("helloworld-spring")
+    runCommandArgs.set(listOf("run", "-i", "-p", "8080:8080", "--rm"))
 }
 
 //

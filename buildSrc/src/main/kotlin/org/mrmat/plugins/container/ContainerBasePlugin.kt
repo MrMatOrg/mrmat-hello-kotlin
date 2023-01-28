@@ -5,7 +5,6 @@ import org.gradle.api.Project
 import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.Exec
 import org.gradle.kotlin.dsl.register
-import java.io.ByteArrayOutputStream
 
 abstract class ContainerBasePlugin: Plugin<Project> {
 
@@ -14,7 +13,7 @@ abstract class ContainerBasePlugin: Plugin<Project> {
         const val EXT: String = "mrmatContainer"
     }
 
-    override fun apply(project: Project): Unit {
+    override fun apply(project: Project) {
         //
         // Establish configurability
 
@@ -30,6 +29,17 @@ abstract class ContainerBasePlugin: Plugin<Project> {
             outputs.dir(containerExtension.buildPath)
             from(containerExtension.srcPath)
             into(containerExtension.buildPath)
+        }
+
+        project.tasks.register<Exec>("containerRunLocal") {
+            group = GROUP
+            description = "Run the container locally"
+            workingDir = containerExtension.buildPath.get().asFile
+            executable = containerExtension.builderCommand.get()
+            args(
+                *containerExtension.runCommandArgs.get().toTypedArray(),
+                "${containerExtension.imageName.get()}:${containerExtension.imageVersion.get()}"
+            )
         }
 
         project.tasks.register<Exec>("containerBuildLocal") {

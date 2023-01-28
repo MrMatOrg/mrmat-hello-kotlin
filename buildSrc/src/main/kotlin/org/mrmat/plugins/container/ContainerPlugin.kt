@@ -12,10 +12,14 @@ abstract class ContainerPlugin: Plugin<Project> {
     override fun apply(project: Project) {
         project.plugins.apply(ContainerBasePlugin::class.java)
 
-        val containerExtension = project.extensions.getByType<ContainerExtension>(ContainerExtension::class.java)
+        val containerExtension = project.extensions.getByType(ContainerExtension::class.java)
 
         //
         // Opinionated task configuration and weaving
+
+        project.tasks.named<Exec>("containerRunLocal") {
+            dependsOn(project.tasks.named<Exec>("containerBuildLocal"))
+        }
 
         project.tasks.named("build") {
             dependsOn(

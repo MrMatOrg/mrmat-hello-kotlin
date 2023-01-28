@@ -21,3 +21,10 @@ tasks.create<Copy>("copyHelmChart") {
     from(configurations.named("helmChart"))
     into(layout.buildDirectory.dir("helm"))
 }
+
+val wheel = project.configurations.create("wheel") {
+    description = "The Python wheel"
+    isCanBeConsumed = true
+    isCanBeResolved = false
+}
+project.artifacts.add("wheel", layout.projectDirectory.file("dist/$project.rootProject.name-$project.version-py3-none-any.whl"))

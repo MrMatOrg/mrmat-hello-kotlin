@@ -21,6 +21,14 @@ abstract class ContainerPlugin: Plugin<Project> {
             dependsOn(project.tasks.named<Exec>("containerBuildLocal"))
         }
 
+        project.tasks.named("containerBuildCI") {
+            dependsOn(project.tasks.named<Copy>("containerAssemble"))
+        }
+
+        project.tasks.named<Exec>("containerBuildLocal") {
+            dependsOn(project.tasks.named<Copy>("containerAssemble"))
+        }
+
         project.tasks.named("build") {
             dependsOn(
                 project.tasks.named<Copy>("containerAssemble"),

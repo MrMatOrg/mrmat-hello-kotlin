@@ -45,7 +45,9 @@ abstract class ContainerBasePlugin: Plugin<Project> {
         project.tasks.register<Exec>("containerBuildLocal") {
             group = GROUP
             description = "Build the container image when container build utilities are present"
-            inputs.files(containerExtension.buildPath.asFileTree)
+            inputs.property("project.version", project.version.toString())
+            inputs.files(containerExtension.buildPath.files())
+            outputs.file(containerExtension.buildPath.file("image").get().asFile)
             workingDir = containerExtension.buildPath.get().asFile
             executable = containerExtension.builderCommand.get()
             args(
@@ -57,6 +59,10 @@ abstract class ContainerBasePlugin: Plugin<Project> {
 
             doFirst {
                 logger.warn("Your Gradle build is orchestrating the container image build")
+            }
+            doLast {
+                logger.lifecycle("Build container image ${containerExtension.imageName.get()}:${containerExtension.imageVersion.get()}")
+                containerExtension.buildPath.file("image").get().asFile.writeText("${containerExtension.imageName.get()}:${containerExtension.imageVersion.get()}")
             }
         }
 

@@ -4,6 +4,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.Exec
+import org.gradle.api.tasks.StopExecutionException
 import org.gradle.kotlin.dsl.register
 import java.io.ByteArrayOutputStream
 
@@ -35,7 +36,7 @@ abstract class HelmBasePlugin: Plugin<Project> {
             group = GROUP
             description = "Assemble the Helm chart"
             inputs.files(helmExtension.srcPath.asFileTree)
-            outputs.dir(helmExtension.buildPath.get())
+            outputs.files(helmExtension.buildPath.asFileTree)
             from(helmExtension.srcPath) {
                 exclude("Chart.yaml")
             }
@@ -52,20 +53,21 @@ abstract class HelmBasePlugin: Plugin<Project> {
             errorOutput = ByteArrayOutputStream()
             executable = helmExtension.helmCommand.get()
             args(*helmExtension.helmLintArgs.get().toTypedArray(), helmExtension.buildPath.get())
+            setIgnoreExitValue(true)
 
-            // TODO: If helm lint fails with non-zero exit code then this is never executed
             doLast {
-                if (executionResult.get().exitValue != 0) {
-                    logger.error("Helm Lint:\n${standardOutput}\n${errorOutput}")
-                } else {
-                    logger.info("Helm Lint:\n${standardOutput}\n${errorOutput}")
-                }
                 project.mkdir(helmExtension.helmLintReport.get().asFile.parent)
                 helmExtension.helmLintReport.get().asFile.writeText("""
                     |Helm Lint:
                     |${standardOutput}
                     |${errorOutput}
                     """.trimMargin())
+                if (executionResult.get().exitValue != 0) {
+                    logger.error("Helm Lint:\n${standardOutput}\n${errorOutput}")
+                    throw StopExecutionException("Helm chart does not lint")
+                } else {
+                    logger.info("Helm Lint:\n${standardOutput}\n${errorOutput}")
+                }
             }
         }
 

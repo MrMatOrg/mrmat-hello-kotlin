@@ -1,9 +1,9 @@
 # Default values for mrmat-hello-kotlin.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
 
-replicaCount: 1
+ingress:
+  host: mrmat-hello-kotlin.internal
 
-helloworld:
+helloworldSpring:
+  replicaCount: 1
   image: helloworld-spring
-  ingress: helloworld-spring
+  path: /helloworld-spring/

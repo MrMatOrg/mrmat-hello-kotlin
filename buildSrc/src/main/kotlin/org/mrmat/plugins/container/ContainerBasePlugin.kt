@@ -69,7 +69,7 @@ abstract class ContainerBasePlugin: Plugin<Project> {
         project.tasks.register("containerBuildCI") {
             group = GROUP
             description = "Generate a container image build shell script when on CI"
-            inputs.files(containerExtension.buildPath.asFileTree)
+            inputs.files(containerExtension.buildPath.files())
             outputs.file(containerExtension.ciBuildFile)
 
             doLast {

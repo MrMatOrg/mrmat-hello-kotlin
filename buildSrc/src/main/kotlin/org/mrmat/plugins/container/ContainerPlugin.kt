@@ -11,7 +11,6 @@ abstract class ContainerPlugin: Plugin<Project> {
 
     override fun apply(project: Project) {
         project.plugins.apply(ContainerBasePlugin::class.java)
-
         val containerExtension = project.extensions.getByType(ContainerExtension::class.java)
 
         //

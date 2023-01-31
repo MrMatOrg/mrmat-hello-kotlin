@@ -8,6 +8,7 @@ import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.Exec
 import org.gradle.api.tasks.bundling.Compression
 import org.gradle.api.tasks.bundling.Tar
+import org.gradle.kotlin.dsl.accessors.runtime.extensionOf
 import org.gradle.kotlin.dsl.named
 
 abstract class HelmPlugin: Plugin<Project> {
@@ -45,7 +46,7 @@ abstract class HelmPlugin: Plugin<Project> {
         distributions.create(helmExtension.configurationName.get()) {
             distributionBaseName.set(helmExtension.configurationName)
             contents {
-                from(project.tasks.named<Copy>("helmAssemble"))
+                from(helmExtension.buildPath)
             }
         }
         val distributionTarTask = project.tasks.named<Tar>("${helmExtension.distributionName.get()}DistTar")

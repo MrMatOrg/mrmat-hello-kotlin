@@ -10,5 +10,8 @@ project(":helloworld-spring").projectDir = file("apps/helloworld-spring")
 include(":deployment:helm")
 project(":deployment:helm").projectDir = file("deployment/helm")
 
+include(":deployment:rpm")
+project(":deployment:rpm").projectDir = file("deployment/rpm")
+
 include(":deployment:ansible")
 project(":deployment:ansible").projectDir = file("deployment/ansible")

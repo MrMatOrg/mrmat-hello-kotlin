@@ -48,6 +48,14 @@ gradlePlugin {
             id = "org.mrmat.plugins.container"
             implementationClass = "org.mrmat.plugins.container.ContainerPlugin"
         }
+        create("rpmBasePlugin") {
+            id = "org.mrmat.plugins.rpm.base"
+            implementationClass = "org.mrmat.plugins.rpm.RPMBasePlugin"
+        }
+        create("rpmPlugin") {
+            id = "org.mrmat.plugins.rpm"
+            implementationClass = "org.mrmat.plugins.rpm.RPMPlugin"
+        }
         create("helmBasePlugin") {
             id = "org.mrmat.plugins.helm.base"
             implementationClass = "org.mrmat.plugins.helm.HelmBasePlugin"

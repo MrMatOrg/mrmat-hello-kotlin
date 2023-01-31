@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/deployment" />
             <option value="$PROJECT_DIR$/deployment/ansible" />
             <option value="$PROJECT_DIR$/deployment/helm" />
+            <option value="$PROJECT_DIR$/deployment/rpm" />
           </set>
         </option>
       </GradleProjectSettings>

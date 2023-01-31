@@ -25,6 +25,10 @@ springBoot {
     mainClass.set("org.mrmat.hello.kotlin.app.helloworld.spring.AppKt")
 }
 
+ktlint {
+    ignoreFailures.set(true)
+}
+
 mrmatContainer {
     imageName.set("helloworld-spring")
     runCommandArgs.set(listOf("run", "-i", "-p", "8080:8080", "--rm"))
@@ -42,4 +46,40 @@ tasks.register<Copy>("containerDependencies") {
 
 tasks.named<Copy>("containerAssemble") {
     dependsOn(tasks.named<Copy>("containerDependencies"))
+}
+
+//val test1 = sourceSets.creating {
+//    kotlin {
+//        srcDirs(project.layout.buildDirectory.dir("generated/testSources/main"))
+//    }
+//}
+//val test2 = sourceSets.register("test2") {
+//        kotlin {
+//        srcDirs(project.layout.buildDirectory.dir("generated/testSources/main"))
+//    }
+//}
+//project.sourceSets.add(test2.get())
+
+//sourceSets {
+//    main {
+//        kotlin {
+//
+//        }
+//    }
+//}
+
+tasks.register("printSourceSetInformation") {
+
+    doLast{
+        sourceSets.forEach { srcSet ->
+            println("["+srcSet.name+"]")
+            print("-->Source directories: "+srcSet.allJava.srcDirs+"\n")
+            print("-->Output directories: "+srcSet.output.classesDirs.files+"\n")
+            print ("-->Compile classpath:\n")
+            srcSet.compileClasspath.files.forEach {
+                print ("  "+it.path+"\n")
+            }
+            println()
+        }
+    }
 }

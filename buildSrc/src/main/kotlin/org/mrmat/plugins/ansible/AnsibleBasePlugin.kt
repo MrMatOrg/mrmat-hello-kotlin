@@ -2,7 +2,6 @@ package org.mrmat.plugins.ansible
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.logging.LogLevel
 import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.Exec
 import org.gradle.api.tasks.StopExecutionException
@@ -16,7 +15,7 @@ abstract class AnsibleBasePlugin: Plugin<Project> {
         const val EXT: String = "mrmatAnsible"
     }
 
-    override fun apply(project: Project): Unit {
+    override fun apply(project: Project) {
 
         //
         // Establish configurability

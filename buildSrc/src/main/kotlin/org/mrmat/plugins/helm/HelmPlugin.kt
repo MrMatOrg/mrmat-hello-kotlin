@@ -8,7 +8,6 @@ import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.Exec
 import org.gradle.api.tasks.bundling.Compression
 import org.gradle.api.tasks.bundling.Tar
-import org.gradle.kotlin.dsl.accessors.runtime.extensionOf
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.named
 

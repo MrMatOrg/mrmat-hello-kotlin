@@ -2,7 +2,6 @@ package org.mrmat.plugins.ansible
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.distribution.Distribution
 import org.gradle.api.distribution.DistributionContainer
 import org.gradle.api.distribution.plugins.DistributionPlugin
 import org.gradle.api.tasks.Copy

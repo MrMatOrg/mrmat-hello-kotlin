@@ -15,7 +15,7 @@ abstract class HelmBasePlugin: Plugin<Project> {
         const val EXT: String = "mrmatHelm"
     }
 
-    override fun apply(project: Project): Unit {
+    override fun apply(project: Project) {
 
         //
         // Establish configurability

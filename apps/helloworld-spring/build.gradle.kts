@@ -8,7 +8,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.0"
     kotlin("plugin.spring") version "1.7.22"
 
-    id("org.jetbrains.dokka") version "1.7.20"
+    id("org.jetbrains.dokka") version "1.8.20"
 }
 
 group = "org.mrmat.hello.kotlin.app.helloworld.spring"

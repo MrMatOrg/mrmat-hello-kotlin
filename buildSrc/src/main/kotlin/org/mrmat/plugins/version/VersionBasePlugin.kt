@@ -11,12 +11,14 @@ abstract class VersionBasePlugin: Plugin<Project> {
         const val EXT: String = "mrmatVersion"
     }
 
-    override fun apply(project: Project): Unit {
+    override fun apply(project: Project) {
 
         //
         // Establish configurability
 
-        project.extensions.create(EXT, VersionExtension::class.java)
+        val versionExtension = project.extensions.create(EXT, VersionExtension::class.java)
+        versionExtension.environmentVersion.convention("MRMAT_VERSION")
+        versionExtension.localVersion.convention("0.0.0-SNAPSHOT")
 
         //
         // Register the tasks

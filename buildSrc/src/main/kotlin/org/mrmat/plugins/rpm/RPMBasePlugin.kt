@@ -15,6 +15,13 @@ class RPMBasePlugin: Plugin<Project> {
 
     override fun apply(project: Project) {
         val rpmExtension = project.extensions.create(EXT, RPMExtension::class.java)
+        rpmExtension.srcPath.convention(project.layout.projectDirectory.dir("src/main/rpm"))
+        rpmExtension.buildPath.convention(project.layout.buildDirectory.dir("rpm"))
+        rpmExtension.rpmFile.convention(rpmExtension.buildPath.file("${project.name}.rpm"))
+        rpmExtension.container.convention("redhat/ubi8:latest")
+        rpmExtension.containerCommand.convention("docker")
+        rpmExtension.containerCommandArgs.convention(listOf("run"))
+        rpmExtension.containerCommandScript.convention(rpmExtension.buildPath.file("build.sh"))
 
         project.tasks.register<Copy>("rpmAssemble") {
             group = GROUP
@@ -32,6 +39,7 @@ class RPMBasePlugin: Plugin<Project> {
             outputs.file(rpmExtension.containerCommandScript)
 
             doLast {
+                println("Will generate RPM build script in ${rpmExtension.containerCommandScript.get()}")
                 rpmExtension.containerCommandScript.get().asFile.writeText("""
                     |#!/bin/bash
                     |dnf install -y rpm-build

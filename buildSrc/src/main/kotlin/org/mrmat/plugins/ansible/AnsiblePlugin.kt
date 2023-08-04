@@ -17,8 +17,7 @@ abstract class AnsiblePlugin: Plugin<Project> {
     override fun apply(project: Project) {
         project.pluginManager.apply(DistributionPlugin::class.java)
         project.pluginManager.apply(AnsibleBasePlugin::class.java)
-
-        val ansibleExtension = project.extensions.getByType<AnsibleExtension>(AnsibleExtension::class.java)
+        val ansibleExtension = project.extensions.getByType<AnsibleExtension>()
 
         //
         // Opinionated task configuration and weaving

@@ -22,6 +22,17 @@ abstract class AnsibleBasePlugin: Plugin<Project> {
         // Establish configurability
 
         val ansibleExtension = project.extensions.create(EXT, AnsibleExtension::class.java)
+        ansibleExtension.configurationName.convention("ansiblePlaybook")
+        ansibleExtension.distributionName.convention("ansiblePlaybook")
+        ansibleExtension.srcPath.convention(project.layout.projectDirectory.dir("src/main/ansible"))
+        ansibleExtension.buildPath.convention((project.layout.buildDirectory.dir("ansible")))
+        ansibleExtension.ansiblePlaybookCommand.convention("ansible-playbook")
+        //        ansiblePlaybookArgs = project.objects.listProperty(String::class.java)
+        ansibleExtension.ansiblePlaybookInventory.convention(ansibleExtension.buildPath.dir("inventories/dev"))
+        ansibleExtension.ansiblePlaybook.convention(ansibleExtension.buildPath.file("deploy.yaml"))
+        ansibleExtension.ansibleLintCommand.convention("ansible-lint")
+        ansibleExtension.ansibleLintReport.convention(project.layout.buildDirectory.file("reports/ansible-lint.txt"))
+        ansibleExtension.ansibleAppVarsFile.convention(ansibleExtension.buildPath.file("group_vars/all/app.yaml"))
 
         //
         // Register the tasks

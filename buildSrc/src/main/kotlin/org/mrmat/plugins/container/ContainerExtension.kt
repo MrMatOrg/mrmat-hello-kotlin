@@ -6,7 +6,7 @@ import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 
-open class ContainerExtension(project: Project) {
+interface ContainerExtension {
 
     val srcPath: DirectoryProperty
     val buildPath: DirectoryProperty
@@ -23,35 +23,4 @@ open class ContainerExtension(project: Project) {
 
     val ci: Property<Boolean>
     val ciBuildFile: RegularFileProperty
-
-    init {
-        srcPath = project.objects.directoryProperty().convention(
-            project.layout.projectDirectory.dir("src/main/container")
-        )
-        buildPath = project.objects.directoryProperty().convention(
-            project.layout.buildDirectory.dir("container")
-        )
-
-        dockerFile = project.objects.fileProperty().convention(
-            buildPath.file("Dockerfile")
-        )
-
-        imageName = project.objects.property(String::class.java).convention(project.rootProject.name)
-        imageVersion = project.objects.property(String::class.java).convention("${project.version}")
-        imageVersionLabel = project.objects.property(String::class.java).convention("org.mrmat.app.version")
-        imageAppLabel = project.objects.property(String::class.java).convention("org.mrmat.app.name")
-
-        builderCommand = project.objects.property(String::class.java).convention("docker")
-        builderCommandArgs = project.objects.listProperty(String::class.java).convention(
-            listOf("build")
-        )
-        runCommandArgs = project.objects.listProperty(String::class.java).convention(
-            listOf("run", "-iP", "--rm")
-        )
-
-        ci = project.objects.property(Boolean::class.java).convention(System.getenv("CI") != null)
-        ciBuildFile = project.objects.fileProperty().convention(
-            buildPath.file("build.sh")
-        )
-    }
 }

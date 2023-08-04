@@ -12,7 +12,7 @@ abstract class VersionPlugin: Plugin<Project> {
 
     override fun apply(project: Project) {
         project.plugins.apply(VersionBasePlugin::class.java)
-        val versionExtension = project.extensions.getByType<VersionExtension>(VersionExtension::class.java)
+        val versionExtension = project.extensions.getByType(VersionExtension::class.java)
 
         project.version =
             System.getenv(versionExtension.environmentVersion.get()) ?: versionExtension.localVersion.get()

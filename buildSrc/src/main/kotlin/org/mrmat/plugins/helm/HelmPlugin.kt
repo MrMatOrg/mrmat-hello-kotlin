@@ -9,6 +9,7 @@ import org.gradle.api.tasks.Exec
 import org.gradle.api.tasks.bundling.Compression
 import org.gradle.api.tasks.bundling.Tar
 import org.gradle.kotlin.dsl.accessors.runtime.extensionOf
+import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.named
 
 abstract class HelmPlugin: Plugin<Project> {
@@ -16,8 +17,7 @@ abstract class HelmPlugin: Plugin<Project> {
     override fun apply(project: Project) {
         project.plugins.apply(DistributionPlugin::class.java)
         project.plugins.apply(HelmBasePlugin::class.java)
-
-        val helmExtension = project.extensions.getByType<HelmExtension>(HelmExtension::class.java)
+        val helmExtension = project.extensions.getByType<HelmExtension>()
 
         //
         // Opinionated task configuration and weaving

@@ -8,7 +8,6 @@ abstract class RPMPlugin: Plugin<Project> {
     override fun apply(project: Project) {
         project.plugins.apply("base")
         project.plugins.apply(RPMBasePlugin::class.java)
-        val rpmExtension = project.extensions.getByType(RPMExtension::class.java)
 
         //
         // Opinionated task configuration and weaving
@@ -17,10 +16,14 @@ abstract class RPMPlugin: Plugin<Project> {
             dependsOn(
                 project.tasks.named("rpmAssemble"),
                 project.tasks.named("rpmBuildContainerScript"))
+            mustRunAfter(
+                project.tasks.named("rpmAssemble"),
+                project.tasks.named("rpmBuildContainerScript"))
         }
 
         project.tasks.named("build") {
             dependsOn(project.tasks.named("rpmBuildContainer"))
+            mustRunAfter(project.tasks.named("rpmBuildContainer"))
         }
     }
 }

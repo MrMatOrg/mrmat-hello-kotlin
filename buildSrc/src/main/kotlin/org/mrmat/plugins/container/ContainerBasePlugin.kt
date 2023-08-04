@@ -18,6 +18,19 @@ abstract class ContainerBasePlugin: Plugin<Project> {
         // Establish configurability
 
         val containerExtension = project.extensions.create(EXT, ContainerExtension::class.java)
+        containerExtension.srcPath.convention(project.layout.projectDirectory.dir("src/main/container"))
+        containerExtension.buildPath.convention(project.layout.buildDirectory.dir("container"))
+        containerExtension.dockerFile.convention(containerExtension.buildPath.file("Dockerfile"))
+        containerExtension.imageName.convention(project.rootProject.name)
+        containerExtension.imageVersion.convention("${project.version}")
+        containerExtension.imageVersionLabel.convention("org.mrmat.app.version")
+        containerExtension.imageAppLabel.convention("org.mrmat.app.name")
+        containerExtension.builderCommand.convention("docker")
+        containerExtension.builderCommandArgs.convention(listOf("build"))
+        containerExtension.runCommandArgs.convention(listOf("run", "-iP", "--rm"))
+        containerExtension.ci.convention(System.getenv("CI") != null)
+        containerExtension.ciBuildFile.convention(containerExtension.buildPath.file("build.sh"))
+
 
         //
         // Register the tasks

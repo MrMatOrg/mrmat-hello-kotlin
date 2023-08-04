@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
+/**
+ * A simple RESTful API
+ * @author imfeldma
+ * @since 1.0.0
+ */
 @RestController
 class HelloWorldAPI {
 
@@ -14,6 +19,10 @@ class HelloWorldAPI {
         const val VERSION_HEADER = "X-APP-VERSION"
     }
 
+    /**
+     * The quintessential hello world is returned here via the index
+     * @return Hello World as text, with the current version of the application appended
+     */
     @GetMapping("/")
     fun index(
         @RequestParam("name", required = false, defaultValue = "Stranger") name: String

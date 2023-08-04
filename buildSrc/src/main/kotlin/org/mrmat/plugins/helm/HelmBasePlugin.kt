@@ -21,6 +21,20 @@ abstract class HelmBasePlugin: Plugin<Project> {
         // Establish configurability
 
         val helmExtension = project.extensions.create(EXT, HelmExtension::class.java)
+        helmExtension.configurationName.convention("helmChart")
+        helmExtension.distributionName.convention("helmChart")
+        helmExtension.srcPath.convention(project.layout.projectDirectory.dir("src/main/helm"))
+        helmExtension.buildPath.convention(project.layout.buildDirectory.dir("helm"))
+        helmExtension.namespace.convention(project.rootProject.name)
+        helmExtension.releaseName.convention(project.rootProject.name)
+        helmExtension.helmCommand.convention("helm")
+        helmExtension.helmLintArgs.convention(listOf("lint"))
+        helmExtension.helmDeployArgs.convention(
+            listOf("upgrade", "--install", "--create-namespace", "--namespace", helmExtension.namespace.get()))
+        helmExtension.helmRemoveArgs.convention(
+            listOf("uninstall", "--namespace", helmExtension.namespace.get())
+        )
+        helmExtension.helmLintReport.convention(project.layout.buildDirectory.file("reports/helm-lint.txt"))
 
         //
         // Register the tasks

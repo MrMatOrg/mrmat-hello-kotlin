@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="17" />
+    <bytecodeTargetLevel target="17">
+      <module name="mrmat-hello-kotlin.mrmat-conventions" target="19" />
+      <module name="mrmat-hello-kotlin.mrmat-conventions.main" target="19" />
+      <module name="mrmat-hello-kotlin.mrmat-conventions.test" target="19" />
+    </bytecodeTargetLevel>
   </component>
 </project>

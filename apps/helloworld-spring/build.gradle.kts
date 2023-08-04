@@ -7,6 +7,8 @@ plugins {
     id("org.springframework.boot") version "3.0.1"
     id("io.spring.dependency-management") version "1.1.0"
     kotlin("plugin.spring") version "1.7.22"
+
+    id("org.jetbrains.dokka") version "1.7.20"
 }
 
 group = "org.mrmat.hello.kotlin.app.helloworld.spring"
@@ -27,11 +29,21 @@ springBoot {
 
 ktlint {
     ignoreFailures.set(true)
+    ktlint.debug.set(true)
 }
 
 mrmatContainer {
     imageName.set("helloworld-spring")
     runCommandArgs.set(listOf("run", "-i", "-p", "8080:8080", "--rm"))
+}
+
+tasks.dokkaHtml.configure {
+    outputDirectory.set(buildDir.resolve("dokka"))
+}
+
+tasks.runKtlintCheckOverGeneratedVersionSourceSet.configure {
+    dependsOn(tasks.generateKotlinVersion)
+    mustRunAfter(tasks.generateKotlinVersion)
 }
 
 //
@@ -46,40 +58,4 @@ tasks.register<Copy>("containerDependencies") {
 
 tasks.named<Copy>("containerAssemble") {
     dependsOn(tasks.named<Copy>("containerDependencies"))
-}
-
-//val test1 = sourceSets.creating {
-//    kotlin {
-//        srcDirs(project.layout.buildDirectory.dir("generated/testSources/main"))
-//    }
-//}
-//val test2 = sourceSets.register("test2") {
-//        kotlin {
-//        srcDirs(project.layout.buildDirectory.dir("generated/testSources/main"))
-//    }
-//}
-//project.sourceSets.add(test2.get())
-
-//sourceSets {
-//    main {
-//        kotlin {
-//
-//        }
-//    }
-//}
-
-tasks.register("printSourceSetInformation") {
-
-    doLast{
-        sourceSets.forEach { srcSet ->
-            println("["+srcSet.name+"]")
-            print("-->Source directories: "+srcSet.allJava.srcDirs+"\n")
-            print("-->Output directories: "+srcSet.output.classesDirs.files+"\n")
-            print ("-->Compile classpath:\n")
-            srcSet.compileClasspath.files.forEach {
-                print ("  "+it.path+"\n")
-            }
-            println()
-        }
-    }
 }

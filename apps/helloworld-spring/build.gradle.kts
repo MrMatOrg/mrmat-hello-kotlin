@@ -5,7 +5,7 @@ plugins {
     id("mrmat.kotlin-conventions")
 
     id("org.springframework.boot") version "3.0.1"
-    id("io.spring.dependency-management") version "1.1.0"
+    id("io.spring.dependency-management") version "1.1.2"
     kotlin("plugin.spring") version "1.7.22"
 
     id("org.jetbrains.dokka") version "1.7.20"

@@ -4,11 +4,11 @@ plugins {
     id("org.mrmat.plugins.container")
     id("mrmat.kotlin-conventions")
 
-    id("org.springframework.boot") version "3.0.1"
-    id("io.spring.dependency-management") version "1.1.0"
-    kotlin("plugin.spring") version "1.7.22"
+    id("org.springframework.boot") version "3.1.2"
+    id("io.spring.dependency-management") version "1.1.2"
+    kotlin("plugin.spring") version "1.9.0"
 
-    id("org.jetbrains.dokka") version "1.7.20"
+    id("org.jetbrains.dokka") version "1.8.20"
 }
 
 group = "org.mrmat.hello.kotlin.app.helloworld.spring"

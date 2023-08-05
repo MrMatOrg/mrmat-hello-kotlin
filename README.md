@@ -16,12 +16,13 @@ functional demonstrated except for a reasonable CI process.
 Just run `./gradlew build` locally. An interactive build will default to '0.0.0-SNAPSHOT' for its version, which is
 a relevant marker showcasing that it was produced locally and therefore should not be considered to have sufficient
 maturity to enter production. It is possible to override this behaviour by setting the 'MRMAT_VERSION' environment
-variable to whatever version is desired but clearly doing so is discouraged.
+variable to whatever version is desired but doing so is discouraged.
 
 ### As part of a CI build
 
-GitHub Actions will trigger a build upon a push and as part of a pull request. If the build is the result of a merge onto the merge branch then it is considered to be a release build, which will
-cause a tag to be created. The version is suffixed with '-SNAPSHOT' for any non-release build.
+GitHub Actions will trigger a build upon a push and as part of a pull request. If the build is the result of a merge 
+onto the main branch then it is considered to be a release build which will cause a tag to be created. The version is 
+suffixed with '-SNAPSHOT' for any non-release build.
 
 The build version is relayed via the 'MRMAT_VERSION' environment variable from the 'MAJOR', 'MINOR' operational
 variables as well as the 'GITHUB_RUN_NUMBER'. 'MAJOR' and 'MINOR' are meant to be adjusted manually because those are
@@ -39,5 +40,4 @@ available in this way.
 
 ### SAST
 
-SAST is provided by [detekt](https://detect.dev) straight in the main `.github/workflows/build.yml` workflow. A 
-desirable alternative to this would be Qodana, but it currently hangs.
+SAST is provided by [detekt](https://detect.dev) straight in the main `.github/workflows/build.yml` workflow.

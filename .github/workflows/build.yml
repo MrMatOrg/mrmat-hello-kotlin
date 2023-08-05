@@ -56,15 +56,15 @@ jobs:
       uses: actions/setup-java@v3
       with:
         distribution: temurin
-        java-version: 19
+        java-version: '17'
 
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        gradle-version: 7.6
+        gradle-version: 8.2
 
     - name: Setup a cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}
@@ -79,7 +79,7 @@ jobs:
     - name: Even though GitHub can execute docker straight from Gradle, here is how we illustrate running it separately
       run: ${{ github.workspace }}/apps/helloworld-spring/build/container/build.sh
 
-    # Uploads results to GitHub repository using the upload-sarif action
+    # Uploads detekt results to GitHub repository using the upload-sarif action
     - uses: github/codeql-action/upload-sarif@v2
       with:
         # Path to SARIF file relative to the root of the repository

@@ -1,4 +1,3 @@
-
 rootProject.name = "mrmat-hello-kotlin"
 
 include(":versioning")

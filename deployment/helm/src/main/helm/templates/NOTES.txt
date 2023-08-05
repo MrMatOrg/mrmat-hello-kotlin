@@ -1,0 +1,7 @@
+This Helm chart deployed the following in a fanout configuration under a single host
+
+* Host: {{ .Values.ingress.host }}
+
+* helloworld-spring
+  * Path: {{ .Values.helloworldSpring.path }}
+  * URI:  http://{{ .Values.ingress.host }}{{ .Values.helloworldSpring.path }}

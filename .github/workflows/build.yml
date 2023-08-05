@@ -56,39 +56,35 @@ jobs:
       uses: actions/setup-java@v3
       with:
         distribution: temurin
-        java-version: 16
+        java-version: 19
 
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: 7.6
+
+    - name: Setup a cache
+      uses: actions/cache@v2
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}
+
+    - name: Setup Python dependencies
+      run: |
+        pip install --user ansible-lint
 
     - name: Build
       run: ./gradlew build
 
-    # Modifies the SARIF output produced by Detekt so that absolute URIs are relative
-    # This is so we can easily map results onto their source files
-    # This can be removed once relative URI support lands in Detekt: https://git.io/JLBbA
-#    - name: Make artifact location URIs relative
-#      continue-on-error: true
-#      run: |
-#        echo "$(
-#          jq \
-#            --arg github_workspace ${{ github.workspace }} \
-#            '. | ( .runs[].results[].locations[].physicalLocation.artifactLocation.uri |= if test($github_workspace) then .[($github_workspace | length | . + 1):] else . end )' \
-#            ${{ github.workspace }}/detekt.sarif.json
-#        )" > ${{ github.workspace }}/detekt.sarif.json
+    - name: Even though GitHub can execute docker straight from Gradle, here is how we illustrate running it separately
+      run: ${{ github.workspace }}/apps/helloworld-spring/build/container/build.sh
 
     # Uploads results to GitHub repository using the upload-sarif action
     - uses: github/codeql-action/upload-sarif@v2
       with:
         # Path to SARIF file relative to the root of the repository
-        sarif_file: ${{ github.workspace }}/build/reports/detekt/detekt.sarif
+        sarif_file: ${{ github.workspace }}/apps/helloworld-spring/build/reports/detekt/detekt.sarif
         checkout_path: ${{ github.workspace }}
-
-    - name: Upload build reports
-      uses: actions/upload-artifact@v3
-      with:
-        name: build-reports
-        path: build/reports
 
     - name: Conditional Release
       uses: marvinpinto/action-automatic-releases@latest

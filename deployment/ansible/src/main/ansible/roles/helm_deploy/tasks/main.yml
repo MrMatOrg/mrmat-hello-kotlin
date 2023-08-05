@@ -1,0 +1,10 @@
+---
+# tasks file for helm_deploy
+
+- name: Show app name
+  ansible.builtin.debug:
+    var: app_name
+
+- name: Show app version
+  ansible.builtin.debug:
+    var: app_version

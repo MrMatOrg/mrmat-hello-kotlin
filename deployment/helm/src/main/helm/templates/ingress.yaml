@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: helloworld-spring
+  labels:
+    app: helloworld-spring
+    version: {{ .Chart.AppVersion }}
+  annotations:
+    nginx.org/rewrites: "serviceName=helloworld-spring-svc rewrite=/"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+        - path: {{ .Values.helloworldSpring.path }}
+          pathType: Prefix
+          backend:
+            service:
+              name: helloworld-spring-svc
+              port:
+                number: 80

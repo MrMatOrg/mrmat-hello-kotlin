@@ -1,0 +1,8 @@
+# An example playbook to deploy our application
+---
+- name: Deploy our application
+  hosts: localhost
+  gather_facts: no
+  roles:
+  - role: helm_deploy
+

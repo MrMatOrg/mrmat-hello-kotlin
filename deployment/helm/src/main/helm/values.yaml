@@ -1,0 +1,9 @@
+# Default values for mrmat-hello-kotlin.
+
+ingress:
+  host: mrmat-hello-kotlin.internal
+
+helloworldSpring:
+  replicaCount: 1
+  image: helloworld-spring
+  path: /helloworld-spring/

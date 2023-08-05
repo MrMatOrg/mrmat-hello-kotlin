@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld-spring
+  labels:
+    app: helloworld-spring
+    version: {{ .Chart.AppVersion }}
+spec:
+  replicas: {{ .Values.helloworldSpring.replicaCount }}
+  selector:
+    matchLabels:
+      app: helloworld-spring
+      version: {{ .Chart.AppVersion }}
+  template:
+    metadata:
+      labels:
+        app: helloworld-spring
+        version: {{ .Chart.AppVersion }}
+    spec:
+      serviceAccountName: helloworld-spring-sa
+      containers:
+        - name: helloworld-spring
+          image: "{{ .Values.helloworldSpring.image }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080

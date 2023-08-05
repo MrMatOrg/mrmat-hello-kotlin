@@ -10,6 +10,7 @@ interface RPMExtension {
     val srcPath: DirectoryProperty
     val buildPath: DirectoryProperty
 
+    val rpmSpec: Property<String>
     val rpmFile: RegularFileProperty
 
     val containerCommand: Property<String>

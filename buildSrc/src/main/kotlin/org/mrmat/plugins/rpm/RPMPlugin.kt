@@ -12,7 +12,7 @@ abstract class RPMPlugin: Plugin<Project> {
         //
         // Opinionated task configuration and weaving
 
-        project.tasks.named("rpmBuildContainer") {
+        project.tasks.named("rpmBuild") {
             dependsOn(
                 project.tasks.named("rpmAssemble"),
                 project.tasks.named("rpmBuildContainerScript"))
@@ -22,8 +22,8 @@ abstract class RPMPlugin: Plugin<Project> {
         }
 
         project.tasks.named("build") {
-            dependsOn(project.tasks.named("rpmBuildContainer"))
-            mustRunAfter(project.tasks.named("rpmBuildContainer"))
+            dependsOn(project.tasks.named("rpmBuild"))
+            mustRunAfter(project.tasks.named("rpmBuild"))
         }
     }
 }

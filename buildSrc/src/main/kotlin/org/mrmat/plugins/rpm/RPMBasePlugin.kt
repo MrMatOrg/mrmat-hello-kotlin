@@ -17,7 +17,6 @@ class RPMBasePlugin: Plugin<Project> {
         val rpmExtension = project.extensions.create(EXT, RPMExtension::class.java)
         rpmExtension.srcPath.convention(project.layout.projectDirectory.dir("src/main/rpm"))
         rpmExtension.buildPath.convention(project.layout.buildDirectory.dir("rpm"))
-        rpmExtension.rpmFile.convention(rpmExtension.buildPath.file("${project.name}.rpm"))
         rpmExtension.container.convention("redhat/ubi8:latest")
         rpmExtension.containerCommand.convention("docker")
         rpmExtension.containerCommandArgs.convention(listOf("run"))
@@ -39,24 +38,23 @@ class RPMBasePlugin: Plugin<Project> {
             outputs.file(rpmExtension.containerCommandScript)
 
             doLast {
-                println("Will generate RPM build script in ${rpmExtension.containerCommandScript.get()}")
                 rpmExtension.containerCommandScript.get().asFile.writeText("""
                     |#!/bin/bash
                     |dnf install -y rpm-build
                     |cd /rpm
-                    |rpmbuild -ba hello-world.spec
+                    |rpmbuild -ba ${rpmExtension.rpmSpec.get()}
                     |cp -R /root/rpmbuild/RPMS /rpm/
                 """.trimMargin())
                 rpmExtension.containerCommandScript.get().asFile.setExecutable(true)
             }
         }
 
-        project.tasks.register<Exec>("rpmBuildContainer") {
+        project.tasks.register<Exec>("rpmBuild") {
             group = GROUP
             description = "Build the RPM in a container image"
             inputs.property("project.version", project.version.toString())
             inputs.files(rpmExtension.buildPath.files())
-            //outputs.files(rpmExtension.rpmFile.get())
+            outputs.files(rpmExtension.rpmFile.get())
             workingDir = rpmExtension.buildPath.get().asFile
             executable = rpmExtension.containerCommand.get()
             args(

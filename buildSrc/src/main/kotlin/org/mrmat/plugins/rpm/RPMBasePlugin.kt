@@ -45,7 +45,7 @@ class RPMBasePlugin: Plugin<Project> {
                     |dnf install -y rpm-build
                     |cd /rpm
                     |rpmbuild -ba hello-world.spec
-                    |cp /root/rpmbuild/RPMS/aarch64/hello-world-1-1.aarch64.rpm /rpm/foo.rpm
+                    |cp -R /root/rpmbuild/RPMS /rpm/
                 """.trimMargin())
                 rpmExtension.containerCommandScript.get().asFile.setExecutable(true)
             }

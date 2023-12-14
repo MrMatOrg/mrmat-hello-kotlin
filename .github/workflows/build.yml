@@ -70,13 +70,13 @@ jobs:
         key: ${{ runner.os }}
 
     - name: Setup Python dependencies
-      run: |
-        pip install --user ansible-lint
+      run: pip install --user ansible-lint
 
     - name: Build
       run: ./gradlew build
 
-    - name: Even though GitHub can execute docker straight from Gradle, here is how we illustrate running it separately
+    # Even though GitHub can execute docker straight from Gradle, here is how we illustrate running it separately
+    - name: Build Container
       run: ${{ github.workspace }}/apps/helloworld-spring/build/container/build.sh
 
     # Uploads detekt results to GitHub repository using the upload-sarif action

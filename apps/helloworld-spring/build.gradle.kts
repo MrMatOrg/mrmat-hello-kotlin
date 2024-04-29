@@ -4,11 +4,11 @@ plugins {
     id("org.mrmat.plugins.container")
     id("mrmat.kotlin-conventions")
 
-    id("org.springframework.boot") version "3.1.5"
-    id("io.spring.dependency-management") version "1.1.3"
-    kotlin("plugin.spring") version "1.9.20"
+    id("org.springframework.boot") version "3.2.5"
+    id("io.spring.dependency-management") version "1.1.4"
+    kotlin("plugin.spring") version "1.9.23"
 
-    id("org.jetbrains.dokka") version "1.8.20"
+    id("org.jetbrains.dokka") version "1.9.20"
 }
 
 group = "org.mrmat.hello.kotlin.app.helloworld.spring"
@@ -38,7 +38,7 @@ mrmatContainer {
 }
 
 tasks.dokkaHtml.configure {
-    outputDirectory.set(buildDir.resolve("dokka"))
+    outputDirectory.set(layout.buildDirectory.dir("dokka"))
 }
 
 tasks.runKtlintCheckOverGeneratedVersionSourceSet.configure {

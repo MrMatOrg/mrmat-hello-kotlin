@@ -16,24 +16,24 @@ java {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.21")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.23")
 
     //
     // Plugins we like to add by convention
 
-    implementation("org.jlleitschuh.gradle:ktlint-gradle:11.6.1")
-    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.4")
+    implementation("org.jlleitschuh.gradle:ktlint-gradle:12.1.0")
+    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.6")
 
     //
     // To generate code holding the version
 
-    implementation("com.squareup:kotlinpoet:1.14.2")
+    implementation("com.squareup:kotlinpoet:1.16.0")
     implementation("com.squareup:javapoet:1.13.0")
 
     //
     // For parsing YAML
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.17.0")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.0")
 }
 
 gradlePlugin {

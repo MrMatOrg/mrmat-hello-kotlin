@@ -11,8 +11,9 @@ repositories {
 }
 
 dependencies {
-    kotlinCompilerPluginClasspath("com.squareup:kotlinpoet:1.11.0")
+    kotlinCompilerPluginClasspath("com.squareup:kotlinpoet:1.16.0")
     testImplementation(kotlin("test"))
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 kotlin {
@@ -20,7 +21,7 @@ kotlin {
         languageVersion.set(JavaLanguageVersion.of(17))
     }
     sourceSets.main {
-        kotlin.srcDir("${project.buildDir}/generated/kotlinpoet/main/kotlin")
+        kotlin.srcDir(layout.buildDirectory.dir("generated/kotlinpoet/main/kotlin"))
     }
 }
 

@@ -61,7 +61,7 @@ jobs:
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        gradle-version: 8.2
+        gradle-version: 8.7
 
     - name: Setup a cache
       uses: actions/cache@v3
@@ -80,7 +80,7 @@ jobs:
       run: ${{ github.workspace }}/apps/helloworld-spring/build/container/build.sh
 
     # Uploads detekt results to GitHub repository using the upload-sarif action
-    - uses: github/codeql-action/upload-sarif@v2
+    - uses: github/codeql-action/upload-sarif@v3
       with:
         # Path to SARIF file relative to the root of the repository
         sarif_file: ${{ github.workspace }}/apps/helloworld-spring/build/reports/detekt/detekt.sarif

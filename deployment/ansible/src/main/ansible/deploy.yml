@@ -2,7 +2,6 @@
 ---
 - name: Deploy our application
   hosts: localhost
-  gather_facts: no
+  gather_facts: false
   roles:
-  - role: helm_deploy
-
+    - role: helm_deploy

@@ -1,8 +1,8 @@
 plugins {
-    kotlin("jvm")
-    id("org.mrmat.plugins.version")
-    id("org.mrmat.plugins.container")
-    id("mrmat.kotlin-conventions")
+    id("org.jetbrains.kotlin.jvm")
+    id("org.mrmat.plugins.gradle.version")
+    id("org.mrmat.plugins.gradle.container")
+    //id("mrmat.kotlin-conventions")
 
     id("org.springframework.boot") version "3.2.5"
     id("io.spring.dependency-management") version "1.1.4"
@@ -12,6 +12,10 @@ plugins {
 }
 
 group = "org.mrmat.hello.kotlin.app.helloworld.spring"
+
+repositories {
+    mavenCentral()
+}
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -27,10 +31,10 @@ springBoot {
     mainClass.set("org.mrmat.hello.kotlin.app.helloworld.spring.AppKt")
 }
 
-ktlint {
-    ignoreFailures.set(true)
-    ktlint.debug.set(true)
-}
+//ktlint {
+//    ignoreFailures.set(true)
+//    ktlint.debug.set(true)
+//}
 
 mrmatContainer {
     imageName.set("helloworld-spring")
@@ -41,10 +45,10 @@ tasks.dokkaHtml.configure {
     outputDirectory.set(layout.buildDirectory.dir("dokka"))
 }
 
-tasks.runKtlintCheckOverGeneratedVersionSourceSet.configure {
-    dependsOn(tasks.generateKotlinVersion)
-    mustRunAfter(tasks.generateKotlinVersion)
-}
+//tasks.runKtlintCheckOverGeneratedVersionSourceSet.configure {
+//    dependsOn(tasks.generateKotlinVersion)
+//    mustRunAfter(tasks.generateKotlinVersion)
+//}
 
 //
 // Let's assemble everything that's needed in the container directory

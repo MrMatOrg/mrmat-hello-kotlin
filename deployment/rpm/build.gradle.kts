@@ -1,6 +1,6 @@
 plugins {
-    id("org.mrmat.plugins.version")
-    id("org.mrmat.plugins.rpm")
+    id("org.mrmat.plugins.gradle.version")
+    id("org.mrmat.plugins.gradle.rpm")
 }
 
 dependencies {

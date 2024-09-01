@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm")
+    id("org.jetbrains.kotlin.jvm")
     id("org.jlleitschuh.gradle.ktlint")
     id("io.gitlab.arturbosch.detekt")
     // You would technically add our other plugins here but since they come out of buildSrc as well that would

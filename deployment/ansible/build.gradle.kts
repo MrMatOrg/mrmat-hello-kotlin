@@ -1,6 +1,6 @@
 plugins {
-    id("org.mrmat.plugins.version")
-    id("org.mrmat.plugins.ansible")
+    id("org.mrmat.plugins.gradle.version")
+    id("org.mrmat.plugins.gradle.ansible")
 }
 
 //mrmatAnsible {
